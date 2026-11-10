@@ -137,7 +137,8 @@ header {
   justify-content: space-between;
   text-align: center;
   background: radial-gradient(circle at 50% 30%, #FFFDE7 0%, #E0F7FA 100%);
-  padding: 20px 18px;
+  padding: 20px 18px 26px 18px;
+  position: relative;
 }
 
 .title-wrap {
@@ -214,11 +215,11 @@ header {
   border: 1.5px solid #FFE082;
 }
 
-/* メロモンステージ（背景透過・適切なサイズ感） */
+/* メロモンステージ（背景透過） */
 .hero-stage {
   width: 150px;
   height: 150px;
-  margin: 12px auto;
+  margin: 10px auto;
   position: relative;
   display: flex;
   align-items: center;
@@ -229,7 +230,7 @@ header {
   .hero-stage {
     width: 190px;
     height: 190px;
-    margin: 18px auto;
+    margin: 16px auto;
   }
 }
 
@@ -253,7 +254,7 @@ header {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .btn-menu {
@@ -291,6 +292,19 @@ header {
   background: #FFFFFF;
   color: #455A64;
   border: 2px solid #CFD8DC;
+}
+
+/* 作成者サイン（黒色・小さめ・右下） */
+.author-signature {
+  position: absolute;
+  bottom: 8px;
+  right: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #212121;
+  letter-spacing: 0.5px;
+  opacity: 0.85;
+  pointer-events: none;
 }
 
 /* ============================================================
@@ -473,7 +487,7 @@ header {
   border-radius: 18px;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity 0.15s;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -792,6 +806,9 @@ header {
         <span>🏆</span> 歴代ランキング TOP3
       </button>
     </div>
+
+    <!-- 作者サイン（黒色・小さめ・右下） -->
+    <div class="author-signature">by Yuya Ando</div>
   </div>
 
   <!-- 2. Course Select Screen -->
@@ -932,9 +949,10 @@ header {
 <script>
 /* ============================================================
    Enhanced Realistic Sound Engine
-   - Grand Piano Physical Model (Harmonics + Detune + Hammer strike + Decay)
-   - Chime Pin-Pon for Correct
-   - Low Buzzer for Wrong
+   - Grand Piano Physical Model
+   - Sustained Question Pitch (rings continuously until answered)
+   - Crisp Fast Pin-Pon (Chime)
+   - Crisp Short Buzzer
    ============================================================ */
 class SoundEngine {
   constructor() {
@@ -943,6 +961,7 @@ class SoundEngine {
     this.bgmTimer = null;
     this.bgmBpm = 115;
     this.bgmStep = 0;
+    this.activeQuestionVoice = null;
   }
 
   init() {
@@ -959,64 +978,57 @@ class SoundEngine {
     return 440 * Math.pow(2, (midi - 69) / 12);
   }
 
-  // Realistic Acoustic Grand Piano Synthesis
-  playPiano(midi, duration = 2.0) {
+  // Realistic Acoustic Grand Piano Key Tap
+  playPiano(midi, duration = 1.6) {
     if (!this.soundEnabled) return;
     this.init();
 
     const t = this.ctx.currentTime;
     const f0 = this.midiToFreq(midi);
 
-    // Master Gain Node
     const masterGain = this.ctx.createGain();
     masterGain.gain.setValueAtTime(0, t);
-    masterGain.gain.linearRampToValueAtTime(0.85, t + 0.004); // Fast hammer attack
+    masterGain.gain.linearRampToValueAtTime(0.75, t + 0.005);
     masterGain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
     masterGain.connect(this.ctx.destination);
 
-    // Dynamic Tone Filter (Hammer impact to singing tone)
     const filter = this.ctx.createBiquadFilter();
     filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(Math.min(f0 * 10, 10000), t);
+    filter.frequency.setValueAtTime(Math.min(f0 * 8, 8500), t);
     filter.frequency.exponentialRampToValueAtTime(Math.max(f0 * 2.2, 500), t + duration * 0.7);
     filter.Q.value = 1.0;
     filter.connect(masterGain);
 
-    // 1. Hammer strike percussive impulse (short high-frequency click)
+    // Hammer transient
     const hammerOsc = this.ctx.createOscillator();
     const hammerGain = this.ctx.createGain();
     hammerOsc.type = 'triangle';
     hammerOsc.frequency.setValueAtTime(f0 * 4.5, t);
-    hammerGain.gain.setValueAtTime(0.25, t);
+    hammerGain.gain.setValueAtTime(0.2, t);
     hammerGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.025);
     hammerOsc.connect(hammerGain);
     hammerGain.connect(filter);
     hammerOsc.start(t);
     hammerOsc.stop(t + 0.03);
 
-    // 2. Harmonic Series with Inharmonicity & 3-String Detune
-    // Piano string stiffness parameter B:
+    // Harmonics
     const B = 0.00025;
     const harmonicWeights = [
       { k: 1, gain: 1.0,   decayMult: 1.0 },
-      { k: 2, gain: 0.65,  decayMult: 0.85 },
-      { k: 3, gain: 0.38,  decayMult: 0.70 },
-      { k: 4, gain: 0.22,  decayMult: 0.55 },
-      { k: 5, gain: 0.12,  decayMult: 0.45 },
-      { k: 6, gain: 0.06,  decayMult: 0.35 },
-      { k: 7, gain: 0.025, decayMult: 0.25 }
+      { k: 2, gain: 0.60,  decayMult: 0.85 },
+      { k: 3, gain: 0.35,  decayMult: 0.70 },
+      { k: 4, gain: 0.18,  decayMult: 0.50 },
+      { k: 5, gain: 0.08,  decayMult: 0.35 }
     ];
 
     harmonicWeights.forEach(h => {
       const freq = h.k * f0 * Math.sqrt(1 + B * h.k * h.k);
-
-      // Main harmonic tone
       const osc = this.ctx.createOscillator();
       const hGain = this.ctx.createGain();
       osc.type = (h.k > 4) ? 'triangle' : 'sine';
       osc.frequency.setValueAtTime(freq, t);
 
-      hGain.gain.setValueAtTime(h.gain * 0.5, t);
+      hGain.gain.setValueAtTime(h.gain * 0.45, t);
       hGain.gain.exponentialRampToValueAtTime(0.0001, t + duration * h.decayMult);
 
       osc.connect(hGain);
@@ -1024,16 +1036,13 @@ class SoundEngine {
       osc.start(t);
       osc.stop(t + duration);
 
-      // Subtle detuned unison string (acoustic chorus warmth)
-      if (h.k <= 3) {
+      if (h.k <= 2) {
         const detuneOsc = this.ctx.createOscillator();
         const detuneGain = this.ctx.createGain();
         detuneOsc.type = 'sine';
         detuneOsc.frequency.setValueAtTime(freq * 1.002, t);
-
-        detuneGain.gain.setValueAtTime(h.gain * 0.25, t);
+        detuneGain.gain.setValueAtTime(h.gain * 0.2, t);
         detuneGain.gain.exponentialRampToValueAtTime(0.0001, t + duration * h.decayMult * 0.9);
-
         detuneOsc.connect(detuneGain);
         detuneGain.connect(filter);
         detuneOsc.start(t);
@@ -1042,25 +1051,126 @@ class SoundEngine {
     });
   }
 
-  // SFX: Door/School Chime "ピン・ポ〜ン♪" (Clear & Pleasant)
+  // Question Piano Sound: Rings & sustains continuously until user answers!
+  playQuestionNote(midi) {
+    if (!this.soundEnabled) return;
+    this.init();
+    this.stopQuestionNote(); // Stop any previous question tone
+
+    const t = this.ctx.currentTime;
+    const f0 = this.midiToFreq(midi);
+
+    const qMasterGain = this.ctx.createGain();
+    qMasterGain.gain.setValueAtTime(0, t);
+    qMasterGain.gain.linearRampToValueAtTime(0.78, t + 0.006);
+    // Initial attack settles to a gentle singing sustain (0.28)
+    qMasterGain.gain.exponentialRampToValueAtTime(0.28, t + 1.2);
+    // Sustains smoothly and softly for up to 35 seconds (until answered!)
+    qMasterGain.gain.exponentialRampToValueAtTime(0.14, t + 35.0);
+    qMasterGain.connect(this.ctx.destination);
+
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(Math.min(f0 * 8, 8000), t);
+    filter.frequency.exponentialRampToValueAtTime(Math.max(f0 * 2.5, 600), t + 1.5);
+    filter.Q.value = 1.0;
+    filter.connect(qMasterGain);
+
+    const oscillators = [];
+
+    // Hammer transient
+    const hammerOsc = this.ctx.createOscillator();
+    const hammerGain = this.ctx.createGain();
+    hammerOsc.type = 'triangle';
+    hammerOsc.frequency.setValueAtTime(f0 * 4.5, t);
+    hammerGain.gain.setValueAtTime(0.22, t);
+    hammerGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.025);
+    hammerOsc.connect(hammerGain);
+    hammerGain.connect(filter);
+    hammerOsc.start(t);
+    hammerOsc.stop(t + 0.03);
+
+    // Sustained harmonics
+    const B = 0.00025;
+    const harmonicWeights = [
+      { k: 1, gain: 1.0,  sustainLevel: 0.85 },
+      { k: 2, gain: 0.60, sustainLevel: 0.45 },
+      { k: 3, gain: 0.32, sustainLevel: 0.20 },
+      { k: 4, gain: 0.16, sustainLevel: 0.08 },
+      { k: 5, gain: 0.08, sustainLevel: 0.03 }
+    ];
+
+    harmonicWeights.forEach(h => {
+      const freq = h.k * f0 * Math.sqrt(1 + B * h.k * h.k);
+      const osc = this.ctx.createOscillator();
+      const hGain = this.ctx.createGain();
+      osc.type = (h.k > 4) ? 'triangle' : 'sine';
+      osc.frequency.setValueAtTime(freq, t);
+
+      hGain.gain.setValueAtTime(h.gain * 0.40, t);
+      hGain.gain.exponentialRampToValueAtTime(h.sustainLevel * 0.22, t + 1.2);
+      hGain.gain.exponentialRampToValueAtTime(h.sustainLevel * 0.10, t + 35.0);
+
+      osc.connect(hGain);
+      hGain.connect(filter);
+      osc.start(t);
+      oscillators.push(osc);
+
+      if (h.k <= 2) {
+        const detuneOsc = this.ctx.createOscillator();
+        const detuneGain = this.ctx.createGain();
+        detuneOsc.type = 'sine';
+        detuneOsc.frequency.setValueAtTime(freq * 1.0025, t);
+        detuneGain.gain.setValueAtTime(h.gain * 0.18, t);
+        detuneGain.gain.exponentialRampToValueAtTime(h.sustainLevel * 0.08, t + 1.2);
+        detuneGain.gain.exponentialRampToValueAtTime(h.sustainLevel * 0.04, t + 35.0);
+        detuneOsc.connect(detuneGain);
+        detuneGain.connect(filter);
+        detuneOsc.start(t);
+        oscillators.push(detuneOsc);
+      }
+    });
+
+    this.activeQuestionVoice = {
+      masterGain: qMasterGain,
+      oscillators: oscillators
+    };
+  }
+
+  // Damps and stops the question note cleanly
+  stopQuestionNote() {
+    if (!this.activeQuestionVoice || !this.ctx) return;
+    const t = this.ctx.currentTime;
+    try {
+      this.activeQuestionVoice.masterGain.gain.cancelScheduledValues(t);
+      this.activeQuestionVoice.masterGain.gain.setTargetAtTime(0, t, 0.03); // Quick 40ms release
+      const oscs = this.activeQuestionVoice.oscillators;
+      setTimeout(() => {
+        oscs.forEach(osc => {
+          try { osc.stop(); osc.disconnect(); } catch(e) {}
+        });
+      }, 80);
+    } catch(e) {}
+    this.activeQuestionVoice = null;
+  }
+
+  // Crisp, fast Pin-Pon chime (Total duration ~0.42s)
   playCorrect() {
     if (!this.soundEnabled) return;
     this.init();
     const t = this.ctx.currentTime;
 
-    // First bell: "ピン" (E6 = 1318.5 Hz)
-    this.playChimeTone(1318.5, t, 0.7);
+    // First bell: "ピン" (E6 = 1318.5 Hz) - fast & bright
+    this.playChimeTone(1318.5, t, 0.20, 0.38);
 
-    // Second bell: "ポ〜ン" (C6 = 1046.5 Hz) after 0.24 seconds
-    this.playChimeTone(1046.5, t + 0.24, 1.1);
+    // Second bell: "ポン" (C6 = 1046.5 Hz) - brisk after 0.13s
+    this.playChimeTone(1046.5, t + 0.13, 0.28, 0.42);
   }
 
-  playChimeTone(freq, startTime, duration) {
-    // Chime bell uses fundamental + non-integer harmonic partials (like a real tubular bell)
+  playChimeTone(freq, startTime, duration, masterLevel = 0.4) {
     const partials = [
-      { mult: 1.0,  gain: 0.45 },
-      { mult: 2.76, gain: 0.15 },
-      { mult: 5.40, gain: 0.05 }
+      { mult: 1.0,  gain: masterLevel },
+      { mult: 2.76, gain: masterLevel * 0.35 }
     ];
 
     partials.forEach(p => {
@@ -1070,53 +1180,41 @@ class SoundEngine {
       osc.frequency.setValueAtTime(freq * p.mult, startTime);
 
       gain.gain.setValueAtTime(0, startTime);
-      gain.gain.linearRampToValueAtTime(p.gain, startTime + 0.008);
+      gain.gain.linearRampToValueAtTime(p.gain, startTime + 0.005);
       gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
 
       osc.connect(gain);
       gain.connect(this.ctx.destination);
       osc.start(startTime);
-      osc.stop(startTime + duration);
+      osc.stop(startTime + duration + 0.01);
     });
   }
 
-  // SFX: Low Quiz Buzzer "ブーー！" (Low Sawtooth + Square)
+  // Short, crisp buzzer (Total duration ~0.22s)
   playWrong() {
     if (!this.soundEnabled) return;
     this.init();
     const t = this.ctx.currentTime;
-    const duration = 0.38;
+    const duration = 0.22;
 
     const masterBuzzer = this.ctx.createGain();
     masterBuzzer.gain.setValueAtTime(0, t);
-    masterBuzzer.gain.linearRampToValueAtTime(0.4, t + 0.01);
-    masterBuzzer.gain.setValueAtTime(0.4, t + duration - 0.05);
+    masterBuzzer.gain.linearRampToValueAtTime(0.38, t + 0.006);
+    masterBuzzer.gain.setValueAtTime(0.38, t + duration - 0.04);
     masterBuzzer.gain.linearRampToValueAtTime(0.0001, t + duration);
     masterBuzzer.connect(this.ctx.destination);
 
-    // Dual detuned low sawtooth oscillators (95Hz & 99Hz) for authentic harsh buzzer
-    [95, 99].forEach(freq => {
+    [96, 100].forEach(freq => {
       const osc = this.ctx.createOscillator();
       osc.type = 'sawtooth';
       osc.frequency.setValueAtTime(freq, t);
       osc.connect(masterBuzzer);
       osc.start(t);
-      osc.stop(t + duration);
+      osc.stop(t + duration + 0.01);
     });
-
-    // Low square sub oscillator (48Hz) for chest thud
-    const subOsc = this.ctx.createOscillator();
-    subOsc.type = 'square';
-    subOsc.frequency.setValueAtTime(48, t);
-    const subGain = this.ctx.createGain();
-    subGain.gain.setValueAtTime(0.2, t);
-    subOsc.connect(subGain);
-    subGain.connect(masterBuzzer);
-    subOsc.start(t);
-    subOsc.stop(t + duration);
   }
 
-  // SFX: Fanfare
+  // Fanfare
   playFanfare() {
     if (!this.soundEnabled) return;
     this.init();
@@ -1146,7 +1244,6 @@ class SoundEngine {
       const bar = Math.floor(this.bgmStep / 4) % chords.length;
       const beat = this.bgmStep % 4;
 
-      // Bass note
       const bassMidi = chords[bar][0];
       if (beat === 0 || beat === 2) {
         const osc = this.ctx.createOscillator();
@@ -1161,7 +1258,6 @@ class SoundEngine {
         osc.stop(t + 0.3);
       }
 
-      // Melody note
       const melMidi = chords[bar][1 + (beat % 3)];
       const mOsc = this.ctx.createOscillator();
       const mGain = this.ctx.createGain();
@@ -1213,7 +1309,6 @@ class StaffRenderer {
     const step = 14;
     const y0 = 38;
 
-    // Draw 5 staff lines
     ctx.strokeStyle = '#333333';
     ctx.lineWidth = 1.8;
     for (let i = 0; i < 5; i++) {
@@ -1224,14 +1319,11 @@ class StaffRenderer {
       ctx.stroke();
     }
 
-    // Clef
     this.drawClef(ctx, clef, y0, step);
 
-    // Note y position
     const noteY = y0 + noteData.stepIndex * (step / 2);
     const noteX = w / 2 + 35;
 
-    // Ledger Lines
     ctx.lineWidth = 2.0;
     ctx.strokeStyle = '#333333';
     if (noteData.stepIndex > 8) {
@@ -1253,7 +1345,6 @@ class StaffRenderer {
       }
     }
 
-    // Note Head
     ctx.save();
     ctx.translate(noteX, noteY);
     ctx.rotate(-0.28);
@@ -1263,7 +1354,6 @@ class StaffRenderer {
     ctx.fill();
     ctx.restore();
 
-    // Stem
     ctx.strokeStyle = '#1A237E';
     ctx.lineWidth = 2.4;
     ctx.beginPath();
@@ -1348,6 +1438,7 @@ class AppController {
     this.timerInterval = null;
     this.startTime = 0;
     this.finishTime = 0;
+    this.isTransitioning = false;
 
     this.rankings = JSON.parse(localStorage.getItem('melomon_rankings_v1') || '[]');
   }
@@ -1358,11 +1449,13 @@ class AppController {
 
     document.getElementById('btn-sound-toggle').addEventListener('click', () => {
       this.sound.soundEnabled = !this.sound.soundEnabled;
+      if (!this.sound.soundEnabled) {
+        this.sound.stopQuestionNote();
+      }
       document.getElementById('btn-sound-toggle').textContent =
         this.sound.soundEnabled ? '🔊 音:ON' : '🔇 音:OFF';
     });
 
-    // Show only Title Screen on load
     this.showScreen('screen-title');
   }
 
@@ -1391,7 +1484,6 @@ class AppController {
       whiteBox.appendChild(el);
     });
 
-    // 8 Black Keys for 12 White Keys
     const blackKeysConfig = [
       { left: 5.5,  relMidi: 61 },
       { left: 13.8, relMidi: 63 },
@@ -1411,7 +1503,7 @@ class AppController {
       el.addEventListener('pointerdown', (e) => {
         e.preventDefault();
         const baseMidiOffset = (this.activeQuestion && this.activeQuestion.clef === 'bass') ? -12 : 0;
-        this.sound.playPiano(k.relMidi + baseMidiOffset, 1.4);
+        this.sound.playPiano(k.relMidi + baseMidiOffset, 1.2);
         el.classList.add('pressed');
         setTimeout(() => el.classList.remove('pressed'), 140);
       });
@@ -1441,11 +1533,14 @@ class AppController {
   showTitle() {
     this.stopChallengeTimer();
     this.sound.stopBGM();
+    this.sound.stopQuestionNote();
+    this.isTransitioning = false;
     this.showScreen('screen-title');
   }
 
   showCourseSelect(mode) {
     this.currentMode = mode;
+    this.sound.stopQuestionNote();
     const titleEl = document.getElementById('course-mode-title');
     titleEl.textContent = (mode === 'practice') ? '📖 練習モード (20問)' : '⚡ 1分チャレンジゲーム';
     this.showScreen('screen-course');
@@ -1456,6 +1551,7 @@ class AppController {
     this.questionCount = 0;
     this.correctCount = 0;
     this.combo = 0;
+    this.isTransitioning = false;
     this.startTime = Date.now();
 
     document.getElementById('hud-mode-badge').textContent =
@@ -1544,32 +1640,38 @@ class AppController {
     // Render Staff
     this.staff.render(clef, picked);
 
-    // Play Grand Piano Sound simultaneously at the exact pitch!
-    this.sound.playPiano(picked.midi, 2.2);
+    // Play Grand Piano Question Note with sustained ring until user answers!
+    this.sound.playQuestionNote(picked.midi);
 
     const octHint = (clef === 'treble') ? '🎹 ト音記号：C4〜G5（1.5オクターブ）' : '🎹 ヘ音記号：C3〜G4（1.5オクターブ）';
     document.getElementById('current-octave-hint').textContent = octHint;
   }
 
   handleKeyInput(keyIndex, keyEl) {
-    if (!this.activeQuestion) return;
+    if (!this.activeQuestion || this.isTransitioning) return;
+
+    // 1. Immediately stop the sustained question piano note!
+    this.sound.stopQuestionNote();
 
     const baseMidi = (this.activeQuestion.clef === 'bass') ? 48 : 60;
     const semitones = [0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19];
     const tappedMidi = baseMidi + semitones[keyIndex];
 
-    // Play tapped piano note
-    this.sound.playPiano(tappedMidi, 1.2);
+    // Play tapped key note briefly
+    this.sound.playPiano(tappedMidi, 0.7);
 
     const isCorrect = (keyIndex === this.activeQuestion.note.keyIndex);
     const flash = document.getElementById('feedback-flash');
+
+    // Lock input during feedback
+    this.isTransitioning = true;
 
     if (isCorrect) {
       this.correctCount++;
       this.combo++;
       document.getElementById('hud-score').textContent = this.correctCount;
 
-      // Chime: ピンポン♪
+      // Crisp fast Pin-Pon (~0.42s)
       this.sound.playCorrect();
       flash.className = 'feedback-flash correct';
       flash.textContent = (this.combo >= 3) ? `★ ${this.combo}連続正解! ★` : '★ ピンポン♪ ★';
@@ -1578,14 +1680,16 @@ class AppController {
       const cheers = ['ナイス！その調子♪', 'ピンポン！大正解✨', '綺麗な耳してるね！👂', '1.5オクターブ完璧！🔥'];
       this.setCharMsg(cheers[Math.floor(Math.random() * cheers.length)]);
 
+      // Wait until Pin-Pon has COMPLETELY finished before moving to next question!
       setTimeout(() => {
         flash.className = 'feedback-flash';
+        this.isTransitioning = false;
         this.stepToNext();
-      }, 340);
+      }, 480);
 
     } else {
       this.combo = 0;
-      // Buzzer: ブーー！
+      // Crisp short buzzer (~0.22s)
       this.sound.playWrong();
       flash.className = 'feedback-flash wrong';
       flash.textContent = `正解は「${this.activeQuestion.note.hint}」！`;
@@ -1595,8 +1699,10 @@ class AppController {
 
       this.highlightCorrectKey(this.activeQuestion.note.keyIndex);
 
+      // Wait until buzzer finishes and user sees correct key hint!
       setTimeout(() => {
         flash.className = 'feedback-flash';
+        this.isTransitioning = false;
         this.stepToNext();
       }, 680);
     }
@@ -1619,7 +1725,7 @@ class AppController {
     const el = document.getElementById(`wkey-${targetKeyIndex}`);
     if (el) {
       el.classList.add('highlight');
-      setTimeout(() => el.classList.remove('highlight'), 550);
+      setTimeout(() => el.classList.remove('highlight'), 520);
     }
   }
 
@@ -1640,6 +1746,7 @@ class AppController {
   }
 
   endPractice() {
+    this.sound.stopQuestionNote();
     const accuracy = Math.round((this.correctCount / this.totalQuestions) * 100);
     const timeSec = parseFloat(this.finishTime);
 
@@ -1682,6 +1789,7 @@ class AppController {
   endChallenge() {
     this.stopChallengeTimer();
     this.sound.stopBGM();
+    this.sound.stopQuestionNote();
 
     const cleared = this.correctCount;
     document.getElementById('result-mode-desc').textContent =
