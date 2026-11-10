@@ -1370,13 +1370,51 @@ class StaffRenderer {
   drawClef(ctx, clef, y0, step) {
     ctx.save();
     if (clef === 'treble') {
-      ctx.font = '64px "Apple Symbols", "Segoe UI Symbol", sans-serif';
+      // ト音記号（G clef）：第2線（ソの線）を中心に描画
+      ctx.font = '68px "Apple Symbols", "Segoe UI Symbol", sans-serif';
       ctx.fillStyle = '#1565C0';
-      ctx.fillText('𝄞', 40, y0 + 3.8 * step);
+      ctx.fillText('𝄞', 38, y0 + 3.82 * step);
     } else {
-      ctx.font = '54px "Apple Symbols", "Segoe UI Symbol", sans-serif';
+      // ヘ音記号（F clef）：第4線（ファの線）を基準にした正確なベクター描画
+      const cx = 52;
+      const y4 = y0 + 1 * step; // 第4線（ファの基準線 = 52px）
+      const y5 = y0;            // 第5線（一番上の線 = 38px）
+      const y3 = y0 + 2 * step; // 第3線
+      const y2 = y0 + 3 * step; // 第2線
+
       ctx.fillStyle = '#C2185B';
-      ctx.fillText('𝄢', 45, y0 + 2.9 * step);
+      ctx.strokeStyle = '#C2185B';
+
+      // 1. 第4線上の大きな基点丸（ヘ音記号の頭）
+      ctx.beginPath();
+      ctx.arc(cx, y4, 5.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 2. メインのアーチ曲線（第4線から第5線へ上がり、右側を通って第2線へ抜ける）
+      ctx.beginPath();
+      ctx.lineWidth = 3.8;
+      ctx.lineCap = 'round';
+      ctx.moveTo(cx, y4);
+      ctx.bezierCurveTo(cx - 2, y5 + 1, cx + 22, y5 - 2, cx + 22, y4 + 3);
+      ctx.bezierCurveTo(cx + 22, y3 + 4, cx + 11, y2 + 4, cx - 1, y2);
+      ctx.stroke();
+
+      // 終端ドット
+      ctx.beginPath();
+      ctx.arc(cx - 1, y2, 2.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 3. 第4線を挟む2つの点（第4間と第3間に配置）
+      const dotX = cx + 28;
+      const dotR = 2.8;
+      // 上の点：第4間（第4線と第5線の間）
+      ctx.beginPath();
+      ctx.arc(dotX, y0 + 0.5 * step, dotR, 0, Math.PI * 2);
+      ctx.fill();
+      // 下の点：第3間（第3線と第4線の間）
+      ctx.beginPath();
+      ctx.arc(dotX, y0 + 1.5 * step, dotR, 0, Math.PI * 2);
+      ctx.fill();
     }
     ctx.restore();
   }
@@ -1401,18 +1439,18 @@ const NOTE_BANK = {
     { keyIndex: 11, name: 'ソ', solfege: 'G5', midi: 79, stepIndex: -1, hint: '上のソ' }
   ],
   bass: [
-    { keyIndex: 0,  name: 'ド', solfege: 'C3', midi: 48, stepIndex: 7,  hint: '低いド' },
-    { keyIndex: 1,  name: 'レ', solfege: 'D3', midi: 50, stepIndex: 6,  hint: '低いレ' },
-    { keyIndex: 2,  name: 'ミ', solfege: 'E3', midi: 52, stepIndex: 5,  hint: '低いミ' },
-    { keyIndex: 3,  name: 'ファ', solfege: 'F3', midi: 53, stepIndex: 4, hint: '第4線のファ' },
-    { keyIndex: 4,  name: 'ソ', solfege: 'G3', midi: 55, stepIndex: 3,  hint: '第4間のソ' },
-    { keyIndex: 5,  name: 'ラ', solfege: 'A3', midi: 57, stepIndex: 2,  hint: '第5線のラ' },
-    { keyIndex: 6,  name: 'シ', solfege: 'B3', midi: 59, stepIndex: 1,  hint: '上のシ' },
-    { keyIndex: 7,  name: 'ド', solfege: 'C4', midi: 60, stepIndex: -2, hint: '真ん中のド' },
-    { keyIndex: 8,  name: 'レ', solfege: 'D4', midi: 62, stepIndex: -3, hint: '上のレ' },
-    { keyIndex: 9,  name: 'ミ', solfege: 'E4', midi: 64, stepIndex: -4, hint: '上のミ' },
-    { keyIndex: 10, name: 'ファ', solfege: 'F4', midi: 65, stepIndex: -5, hint: '上のファ' },
-    { keyIndex: 11, name: 'ソ', solfege: 'G4', midi: 67, stepIndex: -6, hint: '上のソ' }
+    { keyIndex: 0,  name: 'ド', solfege: 'C3', midi: 48, stepIndex: 5,  hint: '第2間のド（低いド）' },
+    { keyIndex: 1,  name: 'レ', solfege: 'D3', midi: 50, stepIndex: 4,  hint: '第3線のレ（低いレ）' },
+    { keyIndex: 2,  name: 'ミ', solfege: 'E3', midi: 52, stepIndex: 3,  hint: '第3間のミ（低いミ）' },
+    { keyIndex: 3,  name: 'ファ', solfege: 'F3', midi: 53, stepIndex: 2,  hint: '第4線のファ（ヘ音の基準ファ）' },
+    { keyIndex: 4,  name: 'ソ', solfege: 'G3', midi: 55, stepIndex: 1,  hint: '第4間のソ（低いソ）' },
+    { keyIndex: 5,  name: 'ラ', solfege: 'A3', midi: 57, stepIndex: 0,  hint: '第5線のラ（低いラ）' },
+    { keyIndex: 6,  name: 'シ', solfege: 'B3', midi: 59, stepIndex: -1, hint: '上第1間のシ（上のシ）' },
+    { keyIndex: 7,  name: 'ド', solfege: 'C4', midi: 60, stepIndex: -2, hint: '上第1線のド（真ん中のド）' },
+    { keyIndex: 8,  name: 'レ', solfege: 'D4', midi: 62, stepIndex: -3, hint: '上第2間のレ（上のレ）' },
+    { keyIndex: 9,  name: 'ミ', solfege: 'E4', midi: 64, stepIndex: -4, hint: '上第2線のミ（上のミ）' },
+    { keyIndex: 10, name: 'ファ', solfege: 'F4', midi: 65, stepIndex: -5, hint: '上第3間のファ（上のファ）' },
+    { keyIndex: 11, name: 'ソ', solfege: 'G4', midi: 67, stepIndex: -6, hint: '上第3線のソ（上のソ）' }
   ]
 };
 
