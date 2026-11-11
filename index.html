@@ -1352,6 +1352,262 @@ body {
   color: #37474F;
 }
 
+
+/* Result Screen: Big Friends Collection Card */
+.result-friends-card {
+  width: 100%;
+  background: linear-gradient(135deg, #FFFDE7, #FFF9C4);
+  border: 2px solid #FFD54F;
+  border-radius: 16px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 3px 8px rgba(255, 193, 7, 0.18);
+}
+
+.result-friends-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 900;
+  color: #E65100;
+  margin-bottom: 8px;
+}
+
+.result-friends-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.result-friend-item {
+  background: #FFFFFF;
+  border: 2px solid #E0E0E0;
+  border-radius: 12px;
+  padding: 6px 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  position: relative;
+}
+
+.result-friend-item.unlocked {
+  border-color: #FFA000;
+  background: #FFFFFF;
+  box-shadow: 0 0 10px rgba(255, 193, 7, 0.45);
+}
+
+.result-friend-item.locked {
+  opacity: 0.45;
+  filter: grayscale(100%);
+  background: #F5F5F5;
+}
+
+.result-friend-img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.result-friend-name {
+  font-size: 9px;
+  font-weight: 900;
+  color: #37474F;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.result-friend-badge {
+  font-size: 8px;
+  font-weight: 900;
+  padding: 1px 4px;
+  border-radius: 6px;
+  background: #4CAF50;
+  color: #FFFFFF;
+}
+
+.result-friend-badge.locked-badge {
+  background: #9E9E9E;
+  color: #FFFFFF;
+}
+
+.result-friends-summary-msg {
+  font-size: 11px;
+  font-weight: 800;
+  color: #E65100;
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* Result Screen: Mistakes Review Card */
+.result-mistakes-card {
+  width: 100%;
+  background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+  border: 2px solid #EF5350;
+  border-radius: 16px;
+  padding: 10px 12px;
+  margin-top: 12px;
+  box-shadow: 0 3px 8px rgba(239, 83, 80, 0.15);
+}
+
+.mistakes-card-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 900;
+  color: #C62828;
+  margin-bottom: 2px;
+}
+
+.mistakes-card-desc {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #B71C1C;
+  margin-bottom: 8px;
+}
+
+.mistakes-grid {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mistake-item-card {
+  flex: 0 0 142px;
+  background: #FFFFFF;
+  border: 1.5px solid #E57373;
+  border-radius: 12px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.mistake-item-card:active {
+  transform: scale(0.97);
+}
+
+.mistake-card-top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.mistake-clef-tag {
+  font-size: 9px;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 6px;
+}
+
+.mistake-clef-tag.treble {
+  background: #FFF3E0;
+  color: #E65100;
+}
+
+.mistake-clef-tag.bass {
+  background: #E8EAF6;
+  color: #283593;
+}
+
+.mistake-note-name {
+  font-size: 14px;
+  font-weight: 900;
+  color: #C62828;
+}
+
+.mistake-count-badge {
+  font-size: 9px;
+  font-weight: 800;
+  color: #D32F2F;
+}
+
+.mini-staff-canvas {
+  width: 126px;
+  height: 74px;
+  border-radius: 6px;
+  background: #FAFAFA;
+}
+
+.mistake-card-foot {
+  margin-top: 3px;
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #1976D2;
+}
+
+.no-mistakes-box {
+  width: 100%;
+  background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+  border: 2px solid #66BB6A;
+  border-radius: 14px;
+  padding: 10px 14px;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #1B5E20;
+}
+
+/* Ranking Screen Mode Tabs */
+.ranking-tab-bar {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 8px;
+  background: #ECEFF1;
+  padding: 4px;
+  border-radius: 12px;
+}
+
+.rank-tab-btn {
+  flex: 1;
+  padding: 7px 2px;
+  font-size: 11px;
+  font-weight: 800;
+  border: none;
+  background: transparent;
+  color: #546E7A;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.rank-tab-btn.active {
+  background: linear-gradient(135deg, #7E57C2, #5E35B1);
+  color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(94, 53, 177, 0.35);
+}
+
+.ranking-mode-subtitle {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #5E35B1;
+  background: #EDE7F6;
+  border-radius: 8px;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Ensure Result and Ranking Screens are smooth-scrolling on mobile */
+.result-screen-wrap, .ranking-screen-wrap {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* ============================================================
    Screen 5: Ranking Screen
    ============================================================ */
@@ -1584,10 +1840,10 @@ body {
             <span class="hud-value" id="hud-time">60</span><span>秒</span>
           </div>
 
-          <!-- Big Kid-Friendly Potion Button -->
-          <button class="hud-flask-btn" id="hud-flask-btn" onclick="App.usePotion()" title="タップして時間を5秒追加！">
+          <!-- Big Kid-Friendly Potion Button (まほうの薬) -->
+          <button class="hud-flask-btn" id="hud-flask-btn" onclick="App.usePotion()" title="タップしてまほうの薬を使う！(+5秒)">
             <span class="flask-icon">🧪</span>
-            <span class="flask-text" id="flask-badge">+5秒</span>
+            <span class="flask-text" id="flask-badge">まほうの薬 +5秒</span>
           </button>
         </div>
       </div>
@@ -1698,7 +1954,7 @@ body {
   </div>
 
   <!-- ========================================================
-       Screen 4: Result Screen with Past Self Comparison
+       Screen 4: Result Screen with Friends Showcase & Mistake Review
        ======================================================== -->
   <div class="screen" id="screen-result">
     <div class="result-screen-wrap">
@@ -1707,8 +1963,20 @@ body {
         <div class="result-rank-title" id="result-rank-title">冒険クリア！</div>
         <div class="result-story-msg" id="result-story-msg">素晴らしい音感と勇気でモンスターを退けた！</div>
 
-        <!-- Past Self Comparison Box -->
-        <div class="past-compare-card" id="past-compare-card">
+        <!-- 1. Big Friends Collection Card (仲間を集めるモードで表示) -->
+        <div class="result-friends-card" id="result-friends-card" style="display:none;">
+          <div class="result-friends-header">
+            <span>🤝</span>
+            <span>今回あつまった仲間たち</span>
+          </div>
+          <div class="result-friends-grid" id="result-friends-grid">
+            <!-- Dynamically injected large companion cards -->
+          </div>
+          <div class="result-friends-summary-msg" id="result-friends-summary-msg"></div>
+        </div>
+
+        <!-- 2. Past Self Comparison Box -->
+        <div class="past-compare-card" id="past-compare-card" style="display:none;">
           <div class="compare-card-header">
             <span>📊</span>
             <span>過去の自分とくらべてみよう！</span>
@@ -1721,6 +1989,7 @@ body {
           </div>
         </div>
 
+        <!-- 3. Result Stats Grid -->
         <div class="result-stats-grid">
           <div class="stat-box">
             <div class="stat-label">正解スコア</div>
@@ -1730,6 +1999,11 @@ body {
             <div class="stat-label" id="result-time-label">クリアタイム</div>
             <div class="stat-val" id="result-time">32.4秒</div>
           </div>
+        </div>
+
+        <!-- 4. Mistakes Review Section (すべてのモードで表示！) -->
+        <div id="result-mistakes-container" style="width:100%;">
+          <!-- Dynamically injected mistake cards or perfect box -->
         </div>
       </div>
 
@@ -1741,18 +2015,30 @@ body {
   </div>
 
   <!-- ========================================================
-       Screen 5: Ranking Screen
+       Screen 5: Ranking Screen (Mode-Specific)
        ======================================================== -->
   <div class="screen" id="screen-ranking">
     <div class="ranking-screen-wrap">
       <div class="screen-top-bar">
         <button class="btn-back" onclick="App.showTitle()">◀ タイトル</button>
         <div style="font-weight:800; font-size:14px;">🏆 冒険のきろく</div>
-        <div style="width:40px;"></div>
+        <div style="width:60px;"></div>
       </div>
 
-      <!-- Best Companion Collection Box (Front-Facing Icons) -->
-      <div class="best-collection-box">
+      <!-- Mode Selector Tabs -->
+      <div class="ranking-tab-bar" id="ranking-tab-bar">
+        <button class="rank-tab-btn active" id="tab-collect_friends" onclick="App.switchRankingTab('collect_friends')">🤝 仲間集め</button>
+        <button class="rank-tab-btn" id="tab-slay" onclick="App.switchRankingTab('slay')">🌲 敵討伐</button>
+        <button class="rank-tab-btn" id="tab-defend_village" onclick="App.switchRankingTab('defend_village')">🏰 村防衛</button>
+        <button class="rank-tab-btn" id="tab-training" onclick="App.switchRankingTab('training')">⚔️ 修行</button>
+      </div>
+
+      <div class="ranking-mode-subtitle" id="ranking-mode-subtitle">
+        仲間集め: 1分間で仲間をたくさん集めよう！(5問ごとに仲間入り)
+      </div>
+
+      <!-- Best Companion Collection Box (Front-Facing Icons, shown in collect_friends mode) -->
+      <div class="best-collection-box" id="best-collection-box">
         <div class="best-collection-title">
           <span>👑</span>
           <span id="best-collection-summary">これまでの最高到達仲間</span>
@@ -2453,6 +2739,113 @@ class StaffRenderer {
       ctx.restore();
     }
   }
+
+  // Mini Staff Renderer for Mistake Review Cards
+  static renderMini(canvas, clef, noteData) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    const step = 9;
+    const y0 = 22;
+
+    ctx.strokeStyle = '#455A64';
+    ctx.lineWidth = 1.2;
+    for (let i = 0; i < 5; i++) {
+      const y = y0 + i * step;
+      ctx.beginPath();
+      ctx.moveTo(10, y);
+      ctx.lineTo(w - 10, y);
+      ctx.stroke();
+    }
+
+    // Clef
+    if (clef === 'treble') {
+      ctx.save();
+      ctx.font = '34px "Segoe UI Symbol", "Apple Symbols", sans-serif';
+      ctx.fillStyle = '#212121';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('𝄞', 14, y0 + step * 2.1);
+      ctx.restore();
+    } else {
+      const x = 20;
+      const fLineY = y0 + step * 1;
+      ctx.save();
+      ctx.fillStyle = '#212121';
+      ctx.beginPath();
+      ctx.arc(x, fLineY, 3.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = '#212121';
+      ctx.lineWidth = 2.0;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.arc(x + 2.5, fLineY + 3.8, 7.5, Math.PI * 1.15, Math.PI * 0.15, false);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.bezierCurveTo(x + 10, fLineY + 6, x + 10, fLineY + 15, x + 5, fLineY + 21);
+      ctx.stroke();
+
+      const dotX = x + 14;
+      const dotUpperY = y0 + step * 0.5;
+      const dotLowerY = y0 + step * 1.5;
+      ctx.beginPath();
+      ctx.arc(dotX, dotUpperY, 1.8, 0, Math.PI * 2);
+      ctx.arc(dotX, dotLowerY, 1.8, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    const noteY = y0 + noteData.stepIndex * (step / 2);
+    const noteX = w / 2 + 18;
+
+    // Ledger lines
+    ctx.lineWidth = 1.6;
+    ctx.strokeStyle = '#333333';
+    if (noteData.stepIndex > 8) {
+      for (let s = 10; s <= noteData.stepIndex; s += 2) {
+        const ly = y0 + s * (step / 2);
+        ctx.beginPath();
+        ctx.moveTo(noteX - 11, ly);
+        ctx.lineTo(noteX + 11, ly);
+        ctx.stroke();
+      }
+    }
+    if (noteData.stepIndex < 0) {
+      for (let s = -2; s >= noteData.stepIndex; s -= 2) {
+        const ly = y0 + s * (step / 2);
+        ctx.beginPath();
+        ctx.moveTo(noteX - 11, ly);
+        ctx.lineTo(noteX + 11, ly);
+        ctx.stroke();
+      }
+    }
+
+    // Note head (Ruby Red to emphasize mistaken note)
+    ctx.save();
+    ctx.translate(noteX, noteY);
+    ctx.rotate(-0.28);
+    ctx.fillStyle = '#C62828';
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 6.5, 4.8, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Stem
+    ctx.strokeStyle = '#C62828';
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    if (noteData.stepIndex >= 4) {
+      ctx.moveTo(noteX + 5.5, noteY);
+      ctx.lineTo(noteX + 5.5, noteY - 24);
+    } else {
+      ctx.moveTo(noteX - 5.5, noteY);
+      ctx.lineTo(noteX - 5.5, noteY + 24);
+    }
+    ctx.stroke();
+  }
 }
 
 /* ============================================================
@@ -2504,7 +2897,7 @@ class AppController {
     this.questionCount = 0;
     this.totalQuestions = 20;
     this.correctCount = 0;
-    this.consecutiveCorrect = 0; // Streak for flask potion
+    this.consecutiveCorrect = 0; // Streak for potion
     this.magicPotions = 0;       // Earned potions (+5s)
     this.hp = 10;
     this.maxHp = 10;
@@ -2517,6 +2910,9 @@ class AppController {
     this.startTime = 0;
     this.finishTime = 0;
     this.hasUserInteracted = false;
+
+    this.sessionMistakes = [];   // Questions mistaken in current play session
+    this.currentRankingTab = 'collect_friends';
 
     this.friendsUnlocked = {
       wolf: false,
@@ -2704,6 +3100,7 @@ class AppController {
     this.magicPotions = 0;
     this.isTransitioning = false;
     this.startTime = Date.now();
+    this.sessionMistakes = [];
 
     this.friendsUnlocked = {
       wolf: false,
@@ -2991,7 +3388,7 @@ class AppController {
           this.triggerMagicSparkles();
           this.updateFlaskBtn();
           this.sound.playMagicSparkle();
-          this.showFloatingEffect(`✨ ${this.consecutiveCorrect}連続正解！フラスコGET！🧪`, '#FFD700');
+          this.showFloatingEffect(`✨ ${this.consecutiveCorrect}連続正解！まほうの薬GET！🧪`, '#FFD700');
         }
       }
 
@@ -3054,9 +3451,23 @@ class AppController {
         }
       }
     } else {
-      // Wrong Answer
+      // Wrong Answer: Record for Mistake Review
       if (this.currentMode === 'adventure') {
         this.consecutiveCorrect = 0;
+      }
+
+      const mistakeKey = `${this.activeQuestion.clef}_${this.activeQuestion.note.midi}`;
+      let existingMistake = this.sessionMistakes.find(m => m.key === mistakeKey);
+      if (!existingMistake) {
+        this.sessionMistakes.push({
+          key: mistakeKey,
+          clef: this.activeQuestion.clef,
+          note: this.activeQuestion.note,
+          pressedKeyIndex: keyIndex,
+          count: 1
+        });
+      } else {
+        existingMistake.count++;
       }
 
       this.sound.playWrong();
@@ -3139,10 +3550,10 @@ class AppController {
     btn.style.display = 'inline-flex';
     if (this.magicPotions > 0) {
       btn.classList.add('active');
-      if (badge) badge.textContent = `+5秒使う！ (×${this.magicPotions})`;
+      if (badge) badge.textContent = `まほうの薬 +5秒使う！ (×${this.magicPotions})`;
     } else {
       btn.classList.remove('active');
-      if (badge) badge.textContent = `+5秒 (0個)`;
+      if (badge) badge.textContent = `まほうの薬 (0個)`;
     }
   }
 
@@ -3154,7 +3565,7 @@ class AppController {
     if (timeEl) timeEl.textContent = this.timeRemaining;
     this.updateFlaskBtn();
     this.sound.playHealSound();
-    this.showFloatingEffect('+5秒 回復！⏳✨', '#4CAF50');
+    this.showFloatingEffect('まほうの薬で +5秒 回復！⏳✨', '#4CAF50');
   }
 
   showFloatingEffect(text, color = '#FFD700') {
@@ -3231,7 +3642,9 @@ class AppController {
     document.getElementById('result-time-label').textContent = '所要時間';
     document.getElementById('result-time').textContent = `${durationSec}秒`;
 
+    document.getElementById('result-friends-card').style.display = 'none';
     document.getElementById('past-compare-card').style.display = 'none';
+    this.buildResultMistakesDisplay();
 
     this.saveRanking({
       mode: 'training',
@@ -3273,14 +3686,21 @@ class AppController {
     document.getElementById('result-time-label').textContent = '残り耐久HP';
     document.getElementById('result-time').textContent = `${this.hp} / 10`;
 
-    // Past Self Comparison logic
+    // Big Friends Showcase & Past Self Comparison
+    const friendsCard = document.getElementById('result-friends-card');
     const compareCard = document.getElementById('past-compare-card');
     if (this.currentSubCourse === 'collect_friends') {
+      friendsCard.style.display = 'block';
+      this.buildResultFriendsDisplay();
       compareCard.style.display = 'block';
       this.buildPastComparison();
     } else {
+      friendsCard.style.display = 'none';
       compareCard.style.display = 'none';
     }
+
+    // Build Mistake Review for all modes
+    this.buildResultMistakesDisplay();
 
     // Check unlocked friends (5問ごとに仲間入り！)
     if (this.currentSubCourse === 'collect_friends') {
@@ -3360,12 +3780,213 @@ class AppController {
     localStorage.setItem('melomon_rpg_rankings_v3', JSON.stringify(this.rankings));
   }
 
-  showRanking() {
-    const container = document.getElementById('ranking-list-box');
+  // Build Large Companion Character Showcase on Result Screen
+  buildResultFriendsDisplay() {
+    const grid = document.getElementById('result-friends-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    const summaryMsg = document.getElementById('result-friends-summary-msg');
+
+    let unlockedCount = 0;
+    ADVENTURE_FRIENDS_INFO.forEach(f => {
+      const isUnlocked = (this.correctCount >= f.threshold);
+      if (isUnlocked) unlockedCount++;
+
+      const item = document.createElement('div');
+      item.className = 'result-friend-item' + (isUnlocked ? ' unlocked' : ' locked');
+
+      let spriteSrc = SPRITES[f.id] || SPRITES.wolf;
+      const badgeText = isUnlocked ? '✨ なかま！' : `あと${f.threshold - this.correctCount}問`;
+      const badgeClass = isUnlocked ? 'result-friend-badge' : 'result-friend-badge locked-badge';
+
+      item.innerHTML = `
+        <img class="result-friend-img" src="${spriteSrc}" alt="${f.name}">
+        <div class="result-friend-name">${f.icon} ${f.name}</div>
+        <div class="${badgeClass}">${badgeText}</div>
+      `;
+      grid.appendChild(item);
+    });
+
+    if (summaryMsg) {
+      if (unlockedCount === 5) {
+        summaryMsg.textContent = '🎉 すごい！！全モンスター討伐＆仲間コンプリート達成！！👑✨';
+      } else if (unlockedCount > 0) {
+        summaryMsg.textContent = `やったね！${unlockedCount}体のモンスターが仲間になってくれたよ！🤝✨`;
+      } else {
+        summaryMsg.textContent = '今回はまだ仲間になれなかったよ。あと少しでオオカミが仲間になるよ！🐺';
+      }
+    }
+  }
+
+  // Build Mistake Review Cards with Staff Display & Note Names for All Modes
+  buildResultMistakesDisplay() {
+    const container = document.getElementById('result-mistakes-container');
+    if (!container) return;
     container.innerHTML = '';
 
-    // Summary of best companions ever
+    if (this.sessionMistakes.length === 0) {
+      container.innerHTML = `
+        <div class="no-mistakes-box">
+          <span style="font-size:26px;">🌟</span>
+          <div>全問正解！まちがえた問題はありません！<br><strong style="color:#2E7D32;">パーフェクト達成おめでとう！🎉</strong></div>
+        </div>
+      `;
+      return;
+    }
+
+    const card = document.createElement('div');
+    card.className = 'result-mistakes-card';
+    card.innerHTML = `
+      <div class="mistakes-card-header">
+        <span class="mistakes-card-icon">🎯</span>
+        <span class="mistakes-card-title">にがて克服！まちがえた問題 (${this.sessionMistakes.length}問)</span>
+      </div>
+      <div class="mistakes-card-desc">五線譜の音符と音名をかくにんして復習しよう！(タップで音が鳴るよ)</div>
+      <div class="mistakes-grid" id="mistakes-grid"></div>
+    `;
+    container.appendChild(card);
+
+    const grid = card.querySelector('#mistakes-grid');
+    this.sessionMistakes.forEach((item, idx) => {
+      const mCard = document.createElement('div');
+      mCard.className = 'mistake-item-card';
+      mCard.title = 'タップして音を聴く';
+      mCard.onclick = () => {
+        this.sound.playPiano(item.note.midi, 1.2);
+      };
+
+      const clefName = (item.clef === 'treble') ? 'ト音 𝄞' : 'ヘ音 𝄢';
+      const clefClass = item.clef;
+
+      mCard.innerHTML = `
+        <div class="mistake-card-top">
+          <span class="mistake-clef-tag ${clefClass}">${clefName}</span>
+          <span class="mistake-note-name">${item.note.name}</span>
+          <span class="mistake-count-badge">×${item.count}</span>
+        </div>
+        <canvas class="mini-staff-canvas" id="mini-staff-canvas-${idx}" width="126" height="74"></canvas>
+        <div class="mistake-card-foot"><span>🔊 タップで試聴</span></div>
+      `;
+      grid.appendChild(mCard);
+
+      // Render Mini Staff Canvas asynchronously after DOM injection
+      setTimeout(() => {
+        const cvs = document.getElementById(`mini-staff-canvas-${idx}`);
+        if (cvs) {
+          StaffRenderer.renderMini(cvs, item.clef, item.note);
+        }
+      }, 0);
+    });
+  }
+
+  // Mode-Specific Ranking Screen
+  showRanking() {
+    this.currentRankingTab = this.currentRankingTab || 'collect_friends';
+    this.switchRankingTab(this.currentRankingTab);
+    this.showScreen('screen-ranking');
+  }
+
+  switchRankingTab(tabKey) {
+    this.currentRankingTab = tabKey;
+
+    // Update Tab Buttons UI
+    document.querySelectorAll('.rank-tab-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.id === `tab-${tabKey}`);
+    });
+
+    const subTitle = document.getElementById('ranking-mode-subtitle');
+    const bestCollectionBox = document.getElementById('best-collection-box');
+    const container = document.getElementById('ranking-list-box');
+    if (!container) return;
+    container.innerHTML = '';
+
+    const tabDescriptions = {
+      collect_friends: '🤝 仲間集め: 1分間で仲間をたくさん集めよう！(5問ごとに仲間入り)',
+      slay: '🌲 敵討伐: 1分間に何問正解できるかチャレンジ！(最高討伐数)',
+      defend_village: '🏰 村防衛: 1分間迫り来る攻撃から村を守り抜け！(耐久HP10)',
+      training: '⚔️ 修行モード: 全20問の正答率とクリアタイム！'
+    };
+    if (subTitle) {
+      subTitle.textContent = tabDescriptions[tabKey] || '';
+    }
+
+    // Best Monster Collection Box (only in collect_friends mode)
+    if (bestCollectionBox) {
+      if (tabKey === 'collect_friends') {
+        bestCollectionBox.style.display = 'block';
+        this.renderBestCollectionBox();
+      } else {
+        bestCollectionBox.style.display = 'none';
+      }
+    }
+
+    // Filter and sort records for this mode
+    let filtered = [];
+    if (tabKey === 'collect_friends') {
+      filtered = this.rankings.filter(r => r.subCourse === 'collect_friends');
+      filtered.sort((a, b) => (b.score - a.score) || (b.hp - a.hp));
+    } else if (tabKey === 'slay') {
+      filtered = this.rankings.filter(r => r.subCourse === 'slay');
+      filtered.sort((a, b) => (b.score - a.score) || (b.hp - a.hp));
+    } else if (tabKey === 'defend_village') {
+      filtered = this.rankings.filter(r => r.subCourse === 'defend_village');
+      filtered.sort((a, b) => (b.score - a.score) || (b.hp - a.hp));
+    } else if (tabKey === 'training') {
+      filtered = this.rankings.filter(r => r.mode === 'training');
+      filtered.sort((a, b) => (b.accuracy - a.accuracy) || (a.time - b.time));
+    }
+
+    // Take top 10
+    filtered = filtered.slice(0, 10);
+
+    if (filtered.length === 0) {
+      container.innerHTML = '<div style="text-align:center; padding:24px; color:#9E9E9E; font-size:12px; font-weight:700;">まだこのモードのきろくがありません</div>';
+      return;
+    }
+
+    filtered.forEach((r, idx) => {
+      const row = document.createElement('div');
+      row.className = 'ranking-row' + (idx === 0 ? ' rank-1' : '');
+
+      const medalIcons = ['🥇', '🥈', '🥉'];
+      const rankBadge = medalIcons[idx] || `${idx + 1}`;
+
+      let mainText = '';
+      let subText = `${r.date} · `;
+
+      if (r.mode === 'training') {
+        const nameMap = { attack: 'こうげき練習', defense: 'ぼうぎょ練習', mixed_training: 'じっせん練習' };
+        const cName = nameMap[r.subCourse] || '修行';
+        mainText = `【${cName}】 20問中${r.score}問正解 (${r.accuracy}%)`;
+        subText += `クリアタイム: ${r.time}秒`;
+      } else {
+        if (r.subCourse === 'collect_friends') {
+          mainText = `スコア: ${r.score}問クリア`;
+          if (r.friendsText) {
+            mainText += ` (仲間: ${r.friendsIcons || ''} ${r.friendsText})`;
+          }
+        } else if (r.subCourse === 'slay') {
+          mainText = `討伐数: ${r.score}体撃破！`;
+        } else if (r.subCourse === 'defend_village') {
+          mainText = `防衛スコア: ${r.score}回防御！`;
+        }
+        subText += `残りHP: ${r.hp}/10`;
+      }
+
+      row.innerHTML = `
+        <div class="rank-num">${rankBadge}</div>
+        <div class="rank-details">
+          <div class="rank-details-main">${mainText}</div>
+          <div class="rank-details-sub">${subText}</div>
+        </div>
+      `;
+      container.appendChild(row);
+    });
+  }
+
+  renderBestCollectionBox() {
     const bestRow = document.getElementById('best-collection-row');
+    if (!bestRow) return;
     bestRow.innerHTML = '';
 
     let maxScore = 0;
@@ -3391,43 +4012,8 @@ class AppController {
       (maxScore >= 15) ? '魔女まで解放！🧙‍♀️' :
       (maxScore >= 10) ? '妖精まで解放！🧚' :
       (maxScore >= 5) ? 'オオカミまで解放！🐺' : 'まだ仲間がいません';
-    document.getElementById('best-collection-summary').textContent = `最高到達仲間: ${summaryText}`;
-
-    if (this.rankings.length === 0) {
-      container.innerHTML = '<div style="text-align:center; padding:20px; color:#9E9E9E; font-size:12px;">まだきろくがありません</div>';
-    } else {
-      this.rankings.forEach((r, idx) => {
-        const row = document.createElement('div');
-        row.className = 'ranking-row' + (idx === 0 ? ' rank-1' : '');
-
-        let mainText = '';
-        let subText = `${r.date} - `;
-
-        if (r.mode === 'training') {
-          const nameMap = { attack: 'こうげき練習', defense: 'ぼうぎょ練習', mixed_training: 'じっせん練習' };
-          mainText = `${nameMap[r.subCourse] || r.subCourse}: ${r.score}問正解 (${r.accuracy}%)`;
-          subText += `${r.time}秒`;
-        } else {
-          const advMap = { slay: '敵をたおす', defend_village: '攻撃をふせぐ', collect_friends: '仲間をあつめる' };
-          mainText = `${advMap[r.subCourse] || r.subCourse}: ${r.score}問クリア`;
-          if (r.friendsText) {
-            mainText += ` 仲間: ${r.friendsIcons} ${r.friendsText} まで`;
-          }
-          subText += `残HP ${r.hp}/10`;
-        }
-
-        row.innerHTML = `
-          <div class="rank-num">${idx + 1}</div>
-          <div class="rank-details">
-            <div class="rank-details-main">${mainText}</div>
-            <div class="rank-details-sub">${subText}</div>
-          </div>
-        `;
-        container.appendChild(row);
-      });
-    }
-
-    this.showScreen('screen-ranking');
+    const sumEl = document.getElementById('best-collection-summary');
+    if (sumEl) sumEl.textContent = `最高到達仲間: ${summaryText}`;
   }
 
   clearRanking() {
