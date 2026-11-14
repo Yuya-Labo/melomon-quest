@@ -1684,13 +1684,16 @@ body {
 
 .mini-staff-canvas {
   width: 126px;
-  height: 74px;
+  min-height: 74px;
+  height: auto;
+  display: block;
   border-radius: 6px;
   background: #FAFAFA;
 }
 
 .mistake-card-foot {
-  margin-top: 3px;
+  margin-top: auto;
+  padding-top: 3px;
   font-size: 9.5px;
   font-weight: 800;
   color: #1976D2;
@@ -2904,13 +2907,22 @@ class StaffRenderer {
 
   // Mini Staff Renderer for Mistake Review Cards
   static renderMini(canvas, clef, noteData) {
+    const step = 9;
+    const relNoteY = noteData.stepIndex * (step / 2);
+    const minRelY = Math.min(-6, relNoteY - 6, noteData.stepIndex >= 4 ? relNoteY - 24 : relNoteY - 6);
+    const maxRelY = Math.max(40, relNoteY + 6, noteData.stepIndex < 4 ? relNoteY + 24 : relNoteY + 6);
+
+    const y0 = Math.max(22, Math.ceil(10 - minRelY));
+    const h = Math.max(74, Math.ceil(y0 + maxRelY + 10));
+
+    if (canvas.height !== h) {
+      canvas.height = h;
+    }
+    canvas.style.height = h + 'px';
+
     const ctx = canvas.getContext('2d');
     const w = canvas.width;
-    const h = canvas.height;
     ctx.clearRect(0, 0, w, h);
-
-    const step = 9;
-    const y0 = 22;
 
     ctx.strokeStyle = '#455A64';
     ctx.lineWidth = 1.2;
