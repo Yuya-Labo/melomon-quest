@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
-<title>メロモンクエスト 〜音符と音の冒険〜</title>
+<title>メロモンクエスト 縦横対応ワイド版 (プロトタイプ)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700;800;900&display=swap" rel="stylesheet">
@@ -1920,6 +1920,433 @@ body {
   text-shadow: 0 1px 4px rgba(0,0,0,0.9) !important;
 }
 
+
+/* === COMMON 22-KEY & MIDDLE-C STYLES === */
+.title-right-col {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.keyboard-scroll-wrap {
+  width: 100%;
+  flex: 1;
+  display: flex;
+}
+.middle-c-key {
+  background: linear-gradient(180deg, #fff 0%, #FFE4E6 100%) !important;
+  border-bottom: 4px solid #E11D48 !important;
+}
+.middle-c-dot {
+  position: absolute;
+  bottom: 34px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #E11D48;
+  font-size: 11px;
+  line-height: 1;
+  pointer-events: none;
+}
+.black-key {
+  width: 3.1% !important;
+  height: 56% !important;
+  pointer-events: none !important;
+}
+
+/* Portrait: keep 22 keys comfortably scrollable (centered around Middle C) */
+@media (orientation: portrait) {
+  .keyboard-scroll-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .piano-keyboard {
+    min-width: 700px !important;
+    width: 700px !important;
+  }
+  body.mode-phone .black-key {
+    height: 85% !important;
+  }
+  body.mode-phone .piano-keyboard.kb-phone-portrait {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+  body.mode-phone .piano-keyboard.kb-phone-portrait .key-label {
+    font-size: 11px;
+  }
+  body.mode-phone .piano-keyboard.kb-phone-portrait .key-sub {
+    font-size: 9px;
+  }
+}
+
+/* === LANDSCAPE WIDE LAYOUT (B案: Wide Battle + Center-Top Staff + Full-Width 22 Keys) === */
+@media (orientation: landscape) {
+  #app-container {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Title Screen: 2-column */
+  .title-screen-wrap {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1.05fr !important;
+    grid-template-rows: auto 1fr !important;
+    gap: 6px 24px !important;
+    align-items: center !important;
+    padding: 10px 28px !important;
+    overflow-y: auto !important;
+  }
+  .title-sound-bar {
+    grid-column: 1 / -1;
+    margin-bottom: 0 !important;
+  }
+  .title-hero-banner {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .title-logo-img {
+    max-width: 260px !important;
+    max-height: 120px !important;
+  }
+  .title-melomon-stage {
+    height: 95px !important;
+    margin: 2px 0 !important;
+  }
+  .title-melomon-stage img {
+    max-height: 90px !important;
+  }
+  .title-right-col {
+    grid-column: 2;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+  .title-hero-selector {
+    margin: 0 0 8px !important;
+    padding: 6px 10px !important;
+  }
+  .hero-choice-card img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .title-btn-group {
+    gap: 7px !important;
+    width: 100%;
+  }
+  .btn-rpg {
+    padding: 9px 14px !important;
+    font-size: 14px !important;
+  }
+
+  /* Course Select: 3-column horizontal */
+  .select-screen-wrap {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    padding: 10px 24px !important;
+  }
+  .course-cards-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px !important;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  /* Play Screen: Full-Width HUD + Wide Battle + 22-Key Piano */
+  .play-screen-wrap {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    padding: 3px 8px 4px !important;
+    gap: 3px !important;
+  }
+  .play-hud {
+    max-width: 100% !important;
+    width: 100% !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 3px 10px !important;
+    min-height: 34px !important;
+    gap: 8px !important;
+  }
+  .hud-tier-top, .hud-tier-bottom {
+    width: auto !important;
+    margin: 0 !important;
+    gap: 8px !important;
+  }
+  .hud-back-btn {
+    padding: 3px 9px !important;
+    font-size: 11.5px !important;
+  }
+  .hud-stat-box {
+    padding: 2px 8px !important;
+    font-size: 11.5px !important;
+  }
+  .hud-flask-btn {
+    padding: 3px 9px !important;
+    font-size: 11.5px !important;
+  }
+
+  /* Battle Arena: Wide + B案 Center-Top Staff */
+  .battle-arena {
+    max-width: 100% !important;
+    width: 100% !important;
+    flex: 1 1 54% !important;
+    min-height: 150px !important;
+    position: relative !important;
+  }
+  .staff-telop-box {
+    position: absolute !important;
+    top: 4px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 280px !important;
+    max-width: 280px !important;
+    margin: 0 !important;
+    z-index: 20 !important;
+    border-width: 2.5px !important;
+  }
+  .telop-header-badge {
+    font-size: 10px !important;
+    padding: 1px 6px !important;
+  }
+  .staff-box {
+    height: 98px !important;
+  }
+  .staff-canvas {
+    width: 270px !important;
+    max-width: 270px !important;
+    height: 98px !important;
+  }
+  .char-message-bubble {
+    font-size: 10px !important;
+    padding: 2px 6px !important;
+  }
+  .hero-wrap {
+    left: 24px !important;
+    bottom: 6px !important;
+  }
+  .monster-wrap {
+    right: 24px !important;
+    bottom: 6px !important;
+  }
+  .hero-sprite {
+    width: 62px !important;
+    height: 62px !important;
+  }
+  .melomon-companion-sprite {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  .monster-sprite.monster-dragon {
+    width: 132px !important;
+    height: 98px !important;
+  }
+
+  /* Keyboard Area: Full Width 22 Keys */
+  .keyboard-area {
+    max-width: 100% !important;
+    width: 100% !important;
+    flex: 0 0 40% !important;
+    min-height: 128px !important;
+    max-height: 180px !important;
+    margin: 0 !important;
+  }
+  .keyboard-octave-hint {
+    font-size: 11px !important;
+    padding: 1px 6px !important;
+  }
+  .piano-keyboard {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 100% !important;
+  }
+  .white-key {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    padding-bottom: 4px !important;
+  }
+  .white-key .key-label {
+    font-size: 11px !important;
+  }
+  .white-key .key-sub {
+    font-size: 8.5px !important;
+  }
+
+  /* Result & Ranking in Landscape */
+  .result-screen-wrap, .ranking-screen-wrap {
+    max-width: 780px !important;
+    width: 94vw !important;
+    margin: 0 auto !important;
+  }
+}
+
+
+/* === DEVICE MODE TOGGLE BUTTON & TABLET MODE === */
+.btn-device-mode {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid #81C784;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #1B5E20;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 30;
+}
+.btn-device-mode.is-tablet {
+  background: #E3F2FD;
+  border-color: #1E88E5;
+  color: #0D47A1;
+}
+
+/* Tablet Mode (works in both Portrait & Landscape on iPad / Android Tablets!) */
+body.mode-tablet #app-container {
+  max-width: 100vw !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+body.mode-tablet .title-screen-wrap {
+  max-width: 960px !important;
+  width: 94vw !important;
+  margin: 0 auto !important;
+}
+body.mode-tablet .play-screen-wrap {
+  max-width: 100vw !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  padding: 6px 12px 8px !important;
+}
+body.mode-tablet .play-hud {
+  max-width: 100% !important;
+  width: 100% !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 6px 14px !important;
+}
+body.mode-tablet .hud-tier-top,
+body.mode-tablet .hud-tier-bottom {
+  width: auto !important;
+  margin: 0 !important;
+  gap: 10px !important;
+}
+body.mode-tablet .battle-arena {
+  max-width: 100% !important;
+  width: 100% !important;
+  flex: 1 1 56% !important;
+  min-height: 220px !important;
+  position: relative !important;
+}
+body.mode-tablet .staff-telop-box {
+  position: absolute !important;
+  top: 10px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: clamp(300px, 42vw, 420px) !important;
+  max-width: 420px !important;
+  margin: 0 !important;
+  z-index: 20 !important;
+}
+body.mode-tablet .staff-box {
+  height: clamp(112px, 16vh, 148px) !important;
+}
+body.mode-tablet .staff-canvas {
+  width: 100% !important;
+  max-width: 400px !important;
+  height: 100% !important;
+}
+body.mode-tablet .telop-header-badge {
+  font-size: 12.5px !important;
+  padding: 3px 8px !important;
+}
+body.mode-tablet .char-message-bubble {
+  font-size: 12.5px !important;
+  padding: 4px 10px !important;
+}
+body.mode-tablet .hero-wrap {
+  left: 36px !important;
+  bottom: 12px !important;
+}
+body.mode-tablet .monster-wrap {
+  right: 36px !important;
+  bottom: 12px !important;
+}
+body.mode-tablet .hero-sprite {
+  width: clamp(72px, 9vw, 96px) !important;
+  height: clamp(72px, 9vw, 96px) !important;
+}
+body.mode-tablet .melomon-companion-sprite {
+  width: clamp(42px, 5vw, 56px) !important;
+  height: clamp(42px, 5vw, 56px) !important;
+}
+body.mode-tablet .monster-sprite.monster-dragon {
+  width: clamp(150px, 18vw, 205px) !important;
+  height: clamp(112px, 14vw, 155px) !important;
+}
+body.mode-tablet .keyboard-area {
+  max-width: 100% !important;
+  width: 100% !important;
+  flex: 0 0 38% !important;
+  min-height: 175px !important;
+  max-height: 270px !important;
+  margin: 0 !important;
+}
+body.mode-tablet .keyboard-scroll-wrap {
+  overflow-x: visible !important;
+}
+body.mode-tablet .piano-keyboard {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 100% !important;
+}
+body.mode-tablet .white-key {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  padding-bottom: 8px !important;
+}
+body.mode-tablet .white-key .key-label {
+  font-size: 14px !important;
+}
+body.mode-tablet .white-key .key-sub {
+  font-size: 10.5px !important;
+}
+body.mode-tablet .middle-c-dot {
+  bottom: 44px !important;
+  font-size: 13px !important;
+}
+body.mode-tablet .keyboard-octave-hint {
+  font-size: 13px !important;
+  padding: 3px 8px !important;
+}
+body.mode-tablet .result-screen-wrap,
+body.mode-tablet .ranking-screen-wrap {
+  max-width: 820px !important;
+  width: 92vw !important;
+  margin: 0 auto !important;
+}
+
 </style>
 </head>
 <body>
@@ -1932,6 +2359,7 @@ body {
   <div class="screen active" id="screen-title" onclick="App.handleUserGesture()">
     <div class="title-screen-wrap">
       <div class="title-header">
+        <button class="btn-device-mode" id="btn-device-mode" onclick="event.stopPropagation(); App.toggleDeviceMode()" title="表示モード切替">📱 スマホモード</button>
         <button class="sound-toggle-btn" id="sound-toggle-btn" onclick="event.stopPropagation(); App.toggleSound()" title="音量ON/OFF">🔊</button>
         <div class="floating-notes">
           <span class="float-note note-1">♪</span>
@@ -2113,41 +2541,56 @@ body {
       <!-- Keyboard Area -->
       <div class="keyboard-area">
         <div class="keyboard-octave-hint">
-          <span id="current-octave-hint">ド・レ・ミ・ファ・ソ・ラ・シ・ド・レ・ミ・ファ・ソ</span>
-          <span style="cursor:pointer; color:#FFF9C4; text-decoration:underline;" onclick="App.toggleLabels()">音名表示切替</span>
+          <span id="current-octave-hint">⬅️ ヘ音（低い音）｜ <strong style="color:#FF8A80;">● 真ん中のド(C4)</strong> ｜ ト音（高い音） ➡️</span>
+          <span style="cursor:pointer; color:#FFF9C4; text-decoration:underline; flex-shrink:0;" onclick="App.toggleLabels()">音名表示切替</span>
         </div>
-        <div class="piano-keyboard" id="piano-keyboard">
-          <!-- 12 White Keys -->
-          <div class="white-key" id="wkey-0" data-k="0"><span class="key-label">ド</span><span class="key-sub">C4</span></div>
-          <div class="white-key" id="wkey-1" data-k="1"><span class="key-label">レ</span><span class="key-sub">D4</span></div>
-          <div class="white-key" id="wkey-2" data-k="2"><span class="key-label">ミ</span><span class="key-sub">E4</span></div>
-          <div class="white-key" id="wkey-3" data-k="3"><span class="key-label">ファ</span><span class="key-sub">F4</span></div>
-          <div class="white-key" id="wkey-4" data-k="4"><span class="key-label">ソ</span><span class="key-sub">G4</span></div>
-          <div class="white-key" id="wkey-5" data-k="5"><span class="key-label">ラ</span><span class="key-sub">A4</span></div>
-          <div class="white-key" id="wkey-6" data-k="6"><span class="key-label">シ</span><span class="key-sub">B4</span></div>
-          <div class="white-key" id="wkey-7" data-k="7"><span class="key-label">ド</span><span class="key-sub">C5</span></div>
-          <div class="white-key" id="wkey-8" data-k="8"><span class="key-label">レ</span><span class="key-sub">D5</span></div>
-          <div class="white-key" id="wkey-9" data-k="9"><span class="key-label">ミ</span><span class="key-sub">E5</span></div>
-          <div class="white-key" id="wkey-10" data-k="10"><span class="key-label">ファ</span><span class="key-sub">F5</span></div>
-          <div class="white-key" id="wkey-11" data-k="11"><span class="key-label">ソ</span><span class="key-sub">G5</span></div>
-
-          <!-- 8 Black Keys -->
-          <div class="black-keys-wrap">
-            <div class="black-key" style="left: 5.8%;"></div>
-            <div class="black-key" style="left: 14.1%;"></div>
-            <div class="black-key" style="left: 30.8%;"></div>
-            <div class="black-key" style="left: 39.1%;"></div>
-            <div class="black-key" style="left: 47.5%;"></div>
-            <div class="black-key" style="left: 64.1%;"></div>
-            <div class="black-key" style="left: 72.5%;"></div>
-            <div class="black-key" style="left: 89.1%;"></div>
+        <div class="keyboard-scroll-wrap" id="keyboard-scroll-wrap">
+          <div class="piano-keyboard" id="piano-keyboard">
+          <div class="white-key" id="wkey-0" data-k="0"><span class="key-label">ソ</span><span class="key-sub">G2</span></div>
+          <div class="white-key" id="wkey-1" data-k="1"><span class="key-label">ラ</span><span class="key-sub">A2</span></div>
+          <div class="white-key" id="wkey-2" data-k="2"><span class="key-label">シ</span><span class="key-sub">B2</span></div>
+          <div class="white-key" id="wkey-3" data-k="3"><span class="key-label">ド</span><span class="key-sub">C3</span></div>
+          <div class="white-key" id="wkey-4" data-k="4"><span class="key-label">レ</span><span class="key-sub">D3</span></div>
+          <div class="white-key" id="wkey-5" data-k="5"><span class="key-label">ミ</span><span class="key-sub">E3</span></div>
+          <div class="white-key" id="wkey-6" data-k="6"><span class="key-label">ファ</span><span class="key-sub">F3</span></div>
+          <div class="white-key" id="wkey-7" data-k="7"><span class="key-label">ソ</span><span class="key-sub">G3</span></div>
+          <div class="white-key" id="wkey-8" data-k="8"><span class="key-label">ラ</span><span class="key-sub">A3</span></div>
+          <div class="white-key" id="wkey-9" data-k="9"><span class="key-label">シ</span><span class="key-sub">B3</span></div>
+          <div class="white-key middle-c-key" id="wkey-10" data-k="10"><span class="middle-c-dot">●</span><span class="key-label">ド</span><span class="key-sub">C4</span></div>
+          <div class="white-key" id="wkey-11" data-k="11"><span class="key-label">レ</span><span class="key-sub">D4</span></div>
+          <div class="white-key" id="wkey-12" data-k="12"><span class="key-label">ミ</span><span class="key-sub">E4</span></div>
+          <div class="white-key" id="wkey-13" data-k="13"><span class="key-label">ファ</span><span class="key-sub">F4</span></div>
+          <div class="white-key" id="wkey-14" data-k="14"><span class="key-label">ソ</span><span class="key-sub">G4</span></div>
+          <div class="white-key" id="wkey-15" data-k="15"><span class="key-label">ラ</span><span class="key-sub">A4</span></div>
+          <div class="white-key" id="wkey-16" data-k="16"><span class="key-label">シ</span><span class="key-sub">B4</span></div>
+          <div class="white-key" id="wkey-17" data-k="17"><span class="key-label">ド</span><span class="key-sub">C5</span></div>
+          <div class="white-key" id="wkey-18" data-k="18"><span class="key-label">レ</span><span class="key-sub">D5</span></div>
+          <div class="white-key" id="wkey-19" data-k="19"><span class="key-label">ミ</span><span class="key-sub">E5</span></div>
+          <div class="white-key" id="wkey-20" data-k="20"><span class="key-label">ファ</span><span class="key-sub">F5</span></div>
+          <div class="white-key" id="wkey-21" data-k="21"><span class="key-label">ソ</span><span class="key-sub">G5</span></div>
+            <div class="black-keys-wrap">
+            <div class="black-key" data-after="0" style="left: 3.00%;"></div>
+            <div class="black-key" data-after="1" style="left: 7.55%;"></div>
+            <div class="black-key" data-after="3" style="left: 16.64%;"></div>
+            <div class="black-key" data-after="4" style="left: 21.18%;"></div>
+            <div class="black-key" data-after="6" style="left: 30.27%;"></div>
+            <div class="black-key" data-after="7" style="left: 34.82%;"></div>
+            <div class="black-key" data-after="8" style="left: 39.36%;"></div>
+            <div class="black-key" data-after="10" style="left: 48.45%;"></div>
+            <div class="black-key" data-after="11" style="left: 53.00%;"></div>
+            <div class="black-key" data-after="13" style="left: 62.09%;"></div>
+            <div class="black-key" data-after="14" style="left: 66.64%;"></div>
+            <div class="black-key" data-after="15" style="left: 71.18%;"></div>
+            <div class="black-key" data-after="17" style="left: 80.27%;"></div>
+            <div class="black-key" data-after="18" style="left: 84.82%;"></div>
+            <div class="black-key" data-after="20" style="left: 93.91%;"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- ========================================================
+<!-- ========================================================
        Screen 4: Result Screen with Friends Showcase & Mistake Review
        ======================================================== -->
   <div class="screen" id="screen-result">
@@ -3065,34 +3508,39 @@ class StaffRenderer {
 /* ============================================================
    Musical Note Database
    ============================================================ */
+const KEY_MIDIS = [43, 45, 47, 48, 50, 52, 53, 55, 57, 59, 60, 62, 64, 65, 67, 69, 71, 72, 74, 76, 77, 79];
+
 const NOTE_BANK = {
   treble: [
-    { name: 'ド', midi: 60, stepIndex: 10, keyIndex: 0 },
-    { name: 'レ', midi: 62, stepIndex: 9, keyIndex: 1 },
-    { name: 'ミ', midi: 64, stepIndex: 8, keyIndex: 2 },
-    { name: 'ファ', midi: 65, stepIndex: 7, keyIndex: 3 },
-    { name: 'ソ', midi: 67, stepIndex: 6, keyIndex: 4 },
-    { name: 'ラ', midi: 69, stepIndex: 5, keyIndex: 5 },
-    { name: 'シ', midi: 71, stepIndex: 4, keyIndex: 6 },
-    { name: 'ド', midi: 72, stepIndex: 3, keyIndex: 7 },
-    { name: 'レ', midi: 74, stepIndex: 2, keyIndex: 8 },
-    { name: 'ミ', midi: 76, stepIndex: 1, keyIndex: 9 },
-    { name: 'ファ', midi: 77, stepIndex: 0, keyIndex: 10 },
-    { name: 'ソ', midi: 79, stepIndex: -1, keyIndex: 11 }
+    { name: 'ド', midi: 60, stepIndex: 10, keyIndex: 10 },
+    { name: 'レ', midi: 62, stepIndex: 9, keyIndex: 11 },
+    { name: 'ミ', midi: 64, stepIndex: 8, keyIndex: 12 },
+    { name: 'ファ', midi: 65, stepIndex: 7, keyIndex: 13 },
+    { name: 'ソ', midi: 67, stepIndex: 6, keyIndex: 14 },
+    { name: 'ラ', midi: 69, stepIndex: 5, keyIndex: 15 },
+    { name: 'シ', midi: 71, stepIndex: 4, keyIndex: 16 },
+    { name: 'ド', midi: 72, stepIndex: 3, keyIndex: 17 },
+    { name: 'レ', midi: 74, stepIndex: 2, keyIndex: 18 },
+    { name: 'ミ', midi: 76, stepIndex: 1, keyIndex: 19 },
+    { name: 'ファ', midi: 77, stepIndex: 0, keyIndex: 20 },
+    { name: 'ソ', midi: 79, stepIndex: -1, keyIndex: 21 }
   ],
   bass: [
-    { name: 'ド', midi: 48, stepIndex: 5, keyIndex: 0 },
-    { name: 'レ', midi: 50, stepIndex: 4, keyIndex: 1 },
-    { name: 'ミ', midi: 52, stepIndex: 3, keyIndex: 2 },
-    { name: 'ファ', midi: 53, stepIndex: 2, keyIndex: 3 },
-    { name: 'ソ', midi: 55, stepIndex: 1, keyIndex: 4 },
-    { name: 'ラ', midi: 57, stepIndex: 0, keyIndex: 5 },
-    { name: 'シ', midi: 59, stepIndex: -1, keyIndex: 6 },
-    { name: 'ド', midi: 60, stepIndex: -2, keyIndex: 7 },
-    { name: 'レ', midi: 62, stepIndex: -3, keyIndex: 8 },
-    { name: 'ミ', midi: 64, stepIndex: -4, keyIndex: 9 },
-    { name: 'ファ', midi: 65, stepIndex: -5, keyIndex: 10 },
-    { name: 'ソ', midi: 67, stepIndex: -6, keyIndex: 11 }
+    { name: 'ソ', midi: 43, stepIndex: 8, keyIndex: 0 },
+    { name: 'ラ', midi: 45, stepIndex: 7, keyIndex: 1 },
+    { name: 'シ', midi: 47, stepIndex: 6, keyIndex: 2 },
+    { name: 'ド', midi: 48, stepIndex: 5, keyIndex: 3 },
+    { name: 'レ', midi: 50, stepIndex: 4, keyIndex: 4 },
+    { name: 'ミ', midi: 52, stepIndex: 3, keyIndex: 5 },
+    { name: 'ファ', midi: 53, stepIndex: 2, keyIndex: 6 },
+    { name: 'ソ', midi: 55, stepIndex: 1, keyIndex: 7 },
+    { name: 'ラ', midi: 57, stepIndex: 0, keyIndex: 8 },
+    { name: 'シ', midi: 59, stepIndex: -1, keyIndex: 9 },
+    { name: 'ド', midi: 60, stepIndex: -2, keyIndex: 10 },
+    { name: 'レ', midi: 62, stepIndex: -3, keyIndex: 11 },
+    { name: 'ミ', midi: 64, stepIndex: -4, keyIndex: 12 },
+    { name: 'ファ', midi: 65, stepIndex: -5, keyIndex: 13 },
+    { name: 'ソ', midi: 67, stepIndex: -6, keyIndex: 14 }
   ]
 };
 
@@ -3215,7 +3663,7 @@ class AppController {
   }
 
   initKeyboard() {
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 22; i++) {
       const key = document.getElementById(`wkey-${i}`);
       if (key) {
         key.addEventListener('pointerdown', (e) => {
@@ -3225,6 +3673,80 @@ class AppController {
         });
       }
     }
+  }
+
+  initDeviceMode() {
+    let mode = localStorage.getItem('mq_device_mode');
+    if (!mode) {
+      mode = (Math.min(window.innerWidth, window.innerHeight) >= 600) ? 'tablet' : 'phone';
+    }
+    this.applyDeviceMode(mode);
+  }
+
+  applyDeviceMode(mode) {
+    this.deviceMode = mode;
+    document.body.classList.toggle('mode-tablet', mode === 'tablet');
+    document.body.classList.toggle('mode-phone', mode !== 'tablet');
+    const btn = document.getElementById('btn-device-mode');
+    if (btn) {
+      if (mode === 'tablet') {
+        btn.textContent = '📟 タブレットモード';
+        btn.classList.add('is-tablet');
+      } else {
+        btn.textContent = '📱 スマホモード';
+        btn.classList.remove('is-tablet');
+      }
+    }
+    this.updateKeyboardRange();
+  }
+
+  updateKeyboardRange() {
+    const kb = document.getElementById('piano-keyboard');
+    if (!kb) return;
+    const isPortrait = window.innerHeight > window.innerWidth;
+    const useSingleScreen = (this.deviceMode === 'phone' && isPortrait);
+    const blackKeys = kb.querySelectorAll('.black-key');
+
+    if (useSingleScreen) {
+      kb.classList.add('kb-phone-portrait');
+      const clef = (this.activeQuestion && this.activeQuestion.clef) ? this.activeQuestion.clef : 'treble';
+      const minK = (clef === 'bass') ? 0 : 7;
+      const maxK = (clef === 'bass') ? 14 : 21;
+      const count = maxK - minK + 1;
+
+      for (let k = 0; k < 22; k++) {
+        const wk = document.getElementById('wkey-' + k);
+        if (wk) wk.style.display = (k >= minK && k <= maxK) ? 'flex' : 'none';
+      }
+      blackKeys.forEach(bk => {
+        const after = parseInt(bk.getAttribute('data-after'), 10);
+        if (after >= minK && after < maxK) {
+          bk.style.display = 'block';
+          bk.style.left = (((after - minK + 0.66) / count) * 100).toFixed(2) + '%';
+          bk.style.setProperty('width', ((0.68 / count) * 100).toFixed(2) + '%', 'important');
+        } else {
+          bk.style.display = 'none';
+        }
+      });
+    } else {
+      kb.classList.remove('kb-phone-portrait');
+      for (let k = 0; k < 22; k++) {
+        const wk = document.getElementById('wkey-' + k);
+        if (wk) wk.style.display = 'flex';
+      }
+      blackKeys.forEach(bk => {
+        const after = parseInt(bk.getAttribute('data-after'), 10);
+        bk.style.display = 'block';
+        bk.style.left = (((after + 0.66) / 22) * 100).toFixed(2) + '%';
+        bk.style.removeProperty('width');
+      });
+    }
+  }
+
+  toggleDeviceMode() {
+    const next = (this.deviceMode === 'tablet') ? 'phone' : 'tablet';
+    localStorage.setItem('mq_device_mode', next);
+    this.applyDeviceMode(next);
   }
 
   toggleLabels() {
@@ -3466,12 +3988,13 @@ class AppController {
     const bank = NOTE_BANK[clef];
     const note = bank[Math.floor(Math.random() * bank.length)];
     this.activeQuestion = { clef, note };
+    this.updateKeyboardRange();
 
     this.staff.render(clef, note);
 
     const hint = (clef === 'treble')
-      ? '【ト音記号】ド〜ソの12鍵盤から選んでね'
-      : '【ヘ音記号】ド〜ソの12鍵盤から選んでね';
+      ? '【ト音記号】ソ〜ソ(G3〜G5)から選んでね'
+      : '【ヘ音記号】ソ〜ソ(G2〜G4)から選んでね';
     document.getElementById('current-octave-hint').textContent = hint;
 
     this.updateBattleStage();
@@ -3615,8 +4138,7 @@ class AppController {
 
     this.sound.stopQuestionNote();
 
-    const baseMidi = (this.activeQuestion.clef === 'bass') ? 48 : 60;
-    this.sound.playPiano(baseMidi + keyIndex, 1.2);
+    this.sound.playPiano(KEY_MIDIS[keyIndex], 1.2);
 
     const isCorrect = (keyIndex === this.activeQuestion.note.keyIndex);
     const flash = document.getElementById('feedback-flash');
@@ -4288,7 +4810,9 @@ class AppController {
 // Initialize
 const App = new AppController();
 window.addEventListener('DOMContentLoaded', () => {
+  App.initDeviceMode();
   App.init();
+  window.addEventListener('resize', () => App.updateKeyboardRange());
 });
 </script>
 </body>
