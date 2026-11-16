@@ -616,8 +616,8 @@ body {
 .staff-telop-box {
   position: relative;
   margin: 4px auto 0;
-  width: 96%;
-  max-width: 480px;
+  width: 80%;
+  max-width: 310px;
   background: rgba(255, 255, 255, 0.95);
   border: 3px solid #FFA000;
   border-radius: 14px;
@@ -2548,21 +2548,21 @@ body.mode-tablet .ranking-screen-wrap {
           <div class="piano-keyboard" id="piano-keyboard">
           <div class="white-key" id="wkey-0" data-k="0"><span class="key-label">ソ</span><span class="key-sub">G2</span></div>
           <div class="white-key" id="wkey-1" data-k="1"><span class="key-label">ラ</span><span class="key-sub">A2</span></div>
-          <div class="white-key" id="wkey-2" data-k="2"><span class="key-label">シ</span><span class="key-sub">B2</span></div>
+          <div class="white-key" id="wkey-2" data-k="2"><span class="key-label">シ</span><span class="key-sub">H2</span></div>
           <div class="white-key" id="wkey-3" data-k="3"><span class="key-label">ド</span><span class="key-sub">C3</span></div>
           <div class="white-key" id="wkey-4" data-k="4"><span class="key-label">レ</span><span class="key-sub">D3</span></div>
           <div class="white-key" id="wkey-5" data-k="5"><span class="key-label">ミ</span><span class="key-sub">E3</span></div>
           <div class="white-key" id="wkey-6" data-k="6"><span class="key-label">ファ</span><span class="key-sub">F3</span></div>
           <div class="white-key" id="wkey-7" data-k="7"><span class="key-label">ソ</span><span class="key-sub">G3</span></div>
           <div class="white-key" id="wkey-8" data-k="8"><span class="key-label">ラ</span><span class="key-sub">A3</span></div>
-          <div class="white-key" id="wkey-9" data-k="9"><span class="key-label">シ</span><span class="key-sub">B3</span></div>
+          <div class="white-key" id="wkey-9" data-k="9"><span class="key-label">シ</span><span class="key-sub">H3</span></div>
           <div class="white-key middle-c-key" id="wkey-10" data-k="10"><span class="middle-c-dot">●</span><span class="key-label">ド</span><span class="key-sub">C4</span></div>
           <div class="white-key" id="wkey-11" data-k="11"><span class="key-label">レ</span><span class="key-sub">D4</span></div>
           <div class="white-key" id="wkey-12" data-k="12"><span class="key-label">ミ</span><span class="key-sub">E4</span></div>
           <div class="white-key" id="wkey-13" data-k="13"><span class="key-label">ファ</span><span class="key-sub">F4</span></div>
           <div class="white-key" id="wkey-14" data-k="14"><span class="key-label">ソ</span><span class="key-sub">G4</span></div>
           <div class="white-key" id="wkey-15" data-k="15"><span class="key-label">ラ</span><span class="key-sub">A4</span></div>
-          <div class="white-key" id="wkey-16" data-k="16"><span class="key-label">シ</span><span class="key-sub">B4</span></div>
+          <div class="white-key" id="wkey-16" data-k="16"><span class="key-label">シ</span><span class="key-sub">H4</span></div>
           <div class="white-key" id="wkey-17" data-k="17"><span class="key-label">ド</span><span class="key-sub">C5</span></div>
           <div class="white-key" id="wkey-18" data-k="18"><span class="key-label">レ</span><span class="key-sub">D5</span></div>
           <div class="white-key" id="wkey-19" data-k="19"><span class="key-label">ミ</span><span class="key-sub">E5</span></div>
@@ -3279,8 +3279,8 @@ class StaffRenderer {
 
     ctx.clearRect(0, 0, w, h);
 
-    const step = 14;
-    const y0 = 42; // Ample 50px headroom for high notes above line 0
+    const step = 10;
+    const y0 = 50; // Ample headroom for high ledger-line notes
 
     ctx.strokeStyle = '#333333';
     ctx.lineWidth = 1.8;
@@ -3305,8 +3305,8 @@ class StaffRenderer {
       for (let s = 10; s <= noteData.stepIndex; s += 2) {
         const ly = y0 + s * (step / 2);
         ctx.beginPath();
-        ctx.moveTo(noteX - 18, ly);
-        ctx.lineTo(noteX + 18, ly);
+        ctx.moveTo(noteX - 15, ly);
+        ctx.lineTo(noteX + 15, ly);
         ctx.stroke();
       }
     }
@@ -3315,8 +3315,8 @@ class StaffRenderer {
       for (let s = -2; s >= noteData.stepIndex; s -= 2) {
         const ly = y0 + s * (step / 2);
         ctx.beginPath();
-        ctx.moveTo(noteX - 18, ly);
-        ctx.lineTo(noteX + 18, ly);
+        ctx.moveTo(noteX - 15, ly);
+        ctx.lineTo(noteX + 15, ly);
         ctx.stroke();
       }
     }
@@ -3327,7 +3327,7 @@ class StaffRenderer {
     ctx.rotate(-0.28);
     ctx.fillStyle = '#1A237E';
     ctx.beginPath();
-    ctx.ellipse(0, 0, 10, 7.5, 0, 0, Math.PI * 2);
+    ctx.ellipse(0, 0, 8.0, 5.8, 0, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
 
@@ -3335,12 +3335,12 @@ class StaffRenderer {
     ctx.strokeStyle = '#1A237E';
     ctx.lineWidth = 2.4;
     ctx.beginPath();
-    if (noteData.stepIndex >= 4) {
-      ctx.moveTo(noteX + 8.5, noteY);
-      ctx.lineTo(noteX + 8.5, noteY - 38);
+    if (noteData.stepIndex > 4) {
+      ctx.moveTo(noteX + 7.2, noteY);
+      ctx.lineTo(noteX + 7.2, noteY - 34);
     } else {
-      ctx.moveTo(noteX - 8.5, noteY);
-      ctx.lineTo(noteX - 8.5, noteY + 38);
+      ctx.moveTo(noteX - 7.2, noteY);
+      ctx.lineTo(noteX - 7.2, noteY + 34);
     }
     ctx.stroke();
   }
@@ -3348,7 +3348,7 @@ class StaffRenderer {
   drawClef(ctx, clef, y0, step) {
     if (clef === 'treble') {
       ctx.save();
-      ctx.font = '58px "Segoe UI Symbol", "Apple Symbols", sans-serif';
+      ctx.font = '48px "Segoe UI Symbol", "Apple Symbols", sans-serif';
       ctx.fillStyle = '#212121';
       ctx.textBaseline = 'middle';
       ctx.fillText('𝄞', 42, y0 + step * 2.1);
@@ -3356,33 +3356,33 @@ class StaffRenderer {
     } else {
       // Bass clef (F clef) - 楽典準拠のベクター描画
       // 基点の丸は第4線（ファの線 = y0 + step * 1）の真上
-      const x = 50;
+      const x = 48;
       const fLineY = y0 + step * 1;
       ctx.save();
       ctx.fillStyle = '#212121';
       ctx.beginPath();
-      ctx.arc(x, fLineY, 5.0, 0, Math.PI * 2);
+      ctx.arc(x, fLineY, 4.2, 0, Math.PI * 2);
       ctx.fill();
 
       // カール曲線
       ctx.strokeStyle = '#212121';
-      ctx.lineWidth = 3.2;
+      ctx.lineWidth = 2.8;
       ctx.lineCap = 'round';
       ctx.beginPath();
-      ctx.arc(x + 4, fLineY + 6, 12, Math.PI * 1.15, Math.PI * 0.15, false);
+      ctx.arc(x + 3.5, fLineY + 4.5, 9.5, Math.PI * 1.15, Math.PI * 0.15, false);
       ctx.stroke();
 
       ctx.beginPath();
-      ctx.bezierCurveTo(x + 16, fLineY + 10, x + 16, fLineY + 24, x + 8, fLineY + 34);
+      ctx.bezierCurveTo(x + 13, fLineY + 7.5, x + 13, fLineY + 18, x + 6.5, fLineY + 26);
       ctx.stroke();
 
       // 第4線を上下から挟む2つの点（第4間と第3間）
-      const dotX = x + 23;
+      const dotX = x + 19;
       const dotUpperY = y0 + step * 0.5; // 第4間
       const dotLowerY = y0 + step * 1.5; // 第3間
       ctx.beginPath();
-      ctx.arc(dotX, dotUpperY, 3.2, 0, Math.PI * 2);
-      ctx.arc(dotX, dotLowerY, 3.2, 0, Math.PI * 2);
+      ctx.arc(dotX, dotUpperY, 2.6, 0, Math.PI * 2);
+      ctx.arc(dotX, dotLowerY, 2.6, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
     }
@@ -3392,8 +3392,8 @@ class StaffRenderer {
   static renderMini(canvas, clef, noteData) {
     const step = 9;
     const relNoteY = noteData.stepIndex * (step / 2);
-    const minRelY = Math.min(-6, relNoteY - 6, noteData.stepIndex >= 4 ? relNoteY - 24 : relNoteY - 6);
-    const maxRelY = Math.max(40, relNoteY + 6, noteData.stepIndex < 4 ? relNoteY + 24 : relNoteY + 6);
+    const minRelY = Math.min(-6, relNoteY - 6, noteData.stepIndex > 4 ? relNoteY - 24 : relNoteY - 6);
+    const maxRelY = Math.max(40, relNoteY + 6, noteData.stepIndex <= 4 ? relNoteY + 24 : relNoteY + 6);
 
     const y0 = Math.max(22, Math.ceil(10 - minRelY));
     const h = Math.max(74, Math.ceil(y0 + maxRelY + 10));
@@ -3494,7 +3494,7 @@ class StaffRenderer {
     ctx.strokeStyle = '#C62828';
     ctx.lineWidth = 1.6;
     ctx.beginPath();
-    if (noteData.stepIndex >= 4) {
+    if (noteData.stepIndex > 4) {
       ctx.moveTo(noteX + 5.5, noteY);
       ctx.lineTo(noteX + 5.5, noteY - 24);
     } else {
